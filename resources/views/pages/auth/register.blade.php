@@ -17,8 +17,8 @@
             <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="frist_name">First Name</label>
-                    <input id="frist_name" type="text"
+                    <label for="name">Name</label>
+                    <input id="name" type="text"
                         class="form-control @error('name')
                         is-invalid
                     @enderror"

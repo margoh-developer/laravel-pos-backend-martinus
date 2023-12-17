@@ -11,30 +11,30 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Users</h1>
+                <h1>Products</h1>
                 <div class="section-header-button">
-                    <a href="{{ route('user.create') }}" class="btn btn-primary">Add New</a>
+                    <a href="{{ route('product.create') }}" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Users</a></div>
-                    <div class="breadcrumb-item">All Users</div>
+                    <div class="breadcrumb-item"><a href="#">Products</a></div>
+                    <div class="breadcrumb-item">All Products</div>
                 </div>
             </div>
             <div class="section-body">
                 <div class="row">
                     <div class="col-12"> @include('layouts.alert')</div>
                 </div>
-                <h2 class="section-title">Users</h2>
+                <h2 class="section-title">Products</h2>
                 <p class="section-lead">
-                    You can manage all users, such as editing, deleting and more.
+                    You can manage all Products, such as editing, deleting and more.
                 </p>
 
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Users</h4>
+                                <h4>All Products</h4>
                             </div>
                             <div class="card-body">
                                 <div class="float-left">
@@ -46,7 +46,7 @@
                                     </select>
                                 </div>
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('user.index') }}">
+                                    <form method="GET" action="{{ route('product.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -63,27 +63,27 @@
                                         <tr>
 
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone Number</th>
-                                            <th>Role</th>
+                                            <th>Stock</th>
+                                            <th>Price</th>
+                                            <th>Category</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
 
-                                        @foreach ($users as $user)
+                                        @foreach ($products as $product)
                                             <tr>
 
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone }}</td>
-                                                <td>{{ $user->roles }}</td>
-                                                <td>{{ $user->created_at }}</td>
+                                                <td>{{ $product->name }}</td>
+                                                <td>{{ $product->stock }}</td>
+                                                <td>{{ $product->price }}</td>
+                                                <td>{{ $product->category }}</td>
+                                                <td>{{ $product->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('user.edit', $user->id) }}"
+                                                        <a href="{{ route('product.edit', $product->id) }}"
                                                             class="btn btn-sm btn-info btn-icon"><i class="fas fa-edit"></i>
                                                             Edit</a>
-                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
+                                                        <form action="{{ route('product.destroy', $product->id) }}" method="POST"
                                                             class="ml-2" onsubmit="return confirmDelete()">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
@@ -99,7 +99,7 @@
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $users->withQueryString()->links() }}
+                                    {{ $products->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
     <script>
         function confirmDelete() {
             // Display a confirmation dialog
-            var result = confirm("Are you sure you want to delete this user?");
+            var result = confirm("Are you sure you want to delete this product?");
 
             // If the user clicks OK, the form will be submitted
             return result;
