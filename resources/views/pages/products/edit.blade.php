@@ -28,7 +28,7 @@
                 <h2 class="section-title">Product</h2>
 
                 <div class="card">
-                    <form action="{{ route('product.update', $product) }}" method="POST">
+                    <form action="{{ route('product.update', $product) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-header">
@@ -47,17 +47,17 @@
                                 @enderror
                             </div>
 
+                            <div class="form-group">
+                                <label>Description</label>
+                                <div class="input-group">
 
-                        <div class="form-group">
-                            <label>Description</label>
-                            <div class="input-group">
-
-                                <input type="text" class="form-control" value="{{ $product->description }}" name="description">
+                                    <input type="text" class="form-control" value="{{ $product->description }}"
+                                        name="description">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Stock</label>
-                            <input id="stock" type="number"
+                            <div class="form-group">
+                                <label>Stock</label>
+                                <input id="stock" type="number"
                                     class="form-control @error('stock')
                         is-invalid
                     @enderror"
@@ -67,9 +67,9 @@
                                 @enderror
                             </div>
 
-                        <div class="form-group">
-                            <label>Price</label>
-                            <input id="stock" type="number"
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input id="stock" type="number"
                                     class="form-control @error('price')
                         is-invalid
                     @enderror"
@@ -79,37 +79,53 @@
                                 @enderror
                             </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Category</label>
-                            <div class="selectgroup w-100">
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="category" value="food" class="selectgroup-input"
-                                        @if ($product->category == 'food') checked @endif>
-                                    <span class="selectgroup-button">Food</span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="category" value="drink" class="selectgroup-input"
-                                        @if ($product->category == 'drink') checked @endif>
-                                    <span class="selectgroup-button">Drink</span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="category" value="snack" class="selectgroup-input"
-                                        @if ($product->category == 'snack') checked @endif>
-                                    <span class="selectgroup-button">Snack</span>
-                                </label>
+                            <div class="form-group">
+                                <label class="form-label">Category</label>
+                                <div class="selectgroup w-100">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="category" value="food" class="selectgroup-input"
+                                            @if ($product->category == 'food') checked @endif>
+                                        <span class="selectgroup-button">Food</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="category" value="drink" class="selectgroup-input"
+                                            @if ($product->category == 'drink') checked @endif>
+                                        <span class="selectgroup-button">Drink</span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="category" value="snack" class="selectgroup-input"
+                                            @if ($product->category == 'snack') checked @endif>
+                                        <span class="selectgroup-button">Snack</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Photo Product</label>
+                                <div class="col-sm-9">
+
+                                    <input type="file"
+                                        class="form-control @error('image')
+                                is-invalid
+
+                            @enderror"
+                                        name="image">
+                                    @error('image')
+                                        <div class="invalid-feedback" role="alert">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
                             </div>
+
                         </div>
+                        <div class="card-footer text-right">
 
+                            <button class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="card-footer text-right">
 
-                    <button class="btn btn-primary">Submit</button>
-                </div>
-                </form>
             </div>
-
-    </div>
     </div>
     </section>
     </div>

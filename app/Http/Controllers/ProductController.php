@@ -26,10 +26,26 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
-        $data = $request->all();
-        // $data['password'] = Hash::make($request->password);
-        \App\Models\Product::create($data);
 
+        $request->validate([
+            'name' => 'required|min:3|unique:products',
+            'price' => 'required|integer',
+            'stock' => 'required|integer',
+            'category'  => 'required|in:food,drink,snack',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
+        ]);
+        $filename = time().'.'.$request->image->extension();
+        $request->image->storeAs('public/products', $filename);
+        $data = $request->all();
+
+        $product = new \App\Models\Product;
+        $product->name = $data['name'];
+        $product->description = $data['description'];
+        $product->price = (int) $data['price'];
+        $product->stock = (int) $data['stock'];
+        $product->category = $data['category'];
+        $product->image = $filename;
+        $product->save();
         return redirect()->route('product.index')->with('success','Product Successfully Added');
     }
 
@@ -43,7 +59,22 @@ class ProductController extends Controller
         $data = $request->all();
         // $data['password'] = Hash::make($request->password);
         // $user = \App\Models\User::findOrFail($id);
+
+        // $request->validate([
+        //     'name' => 'required|min:3|unique:products',
+        //     'price' => 'required|integer',
+        //     'stock' => 'required|integer',
+        //     'category'  => 'required|in:food,drink,snack',
+        //     'image' => 'required|image|mimes:jpeg,png,jpg',
+        // ]);
+        $filename = time().'.'.$request->image->extension();
+        $request->image->storeAs('public/products', $filename);
+
+        $data = $request->all();
+
         $product->update($data);
+        $product->image = $filename;
+        $product->save();
 
         return redirect()->route('product.index')->with('success','Product Successfully Updated');
     }

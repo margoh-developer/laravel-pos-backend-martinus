@@ -29,7 +29,7 @@
                 <p class="section-lead">We provide advanced input fields, such as date picker, color picker, and so on.</p>
 
                 <div class="card">
-                    <form action="{{ route('product.store') }}" method="POST">
+                    <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header">
                             <h4>Input Text</h4>
@@ -57,15 +57,32 @@
                                 <label>Price</label>
                                 <div class="input-group">
 
-                                    <input type="integer" class="form-control" name="price">
+                                    <input type="integer"
+                                        class="form-control @error('price')
+                                    is-invalid
+                                @enderror"
+                                        name="price">
+                                    @error('price')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                             </div>
                             <div class="form-group">
                                 <label>Stock</label>
                                 <div class="input-group">
 
-                                    <input type="number" class="form-control" name="stock">
+                                    <input type="number"
+                                        class="form-control @error('stock')
+                                    is-invalid
+
+                                @enderror"
+                                        name="stock">
+                                    @error('stock')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Category</label>
@@ -86,7 +103,22 @@
 
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label>Photo Product</label>
+                                <div class="col-sm-9">
 
+                                    <input type="file"
+                                        class="form-control @error('image')
+                                    is-invalid
+
+                                @enderror"
+                                        name="image">
+                                    @error('image')
+                                        <div class="invalid-feedback" role="alert">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                            </div>
                         </div>
                         <div class="card-footer text-right">
 
