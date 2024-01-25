@@ -33,7 +33,7 @@ class ProductController extends Controller
             'stock' => 'required|integer',
             'category'  => 'required|in:food,drink,snack',
             'image' => 'required|image|mimes:jpeg,png,jpg',
-            'is_best_seller' => 'required|boolean',
+            // 'is_best_seller' => 'required|boolean',
         ]);
         $filename = time().'.'.$request->image->extension();
         $request->image->storeAs('public/products', $filename);
@@ -45,7 +45,10 @@ class ProductController extends Controller
         $product->price = (int) $data['price'];
         $product->stock = (int) $data['stock'];
         $product->category = $data['category'];
-        $product->is_best_seller = $data['is_best_seller'];
+        if (isset($data['is_best_seller'])) {
+            $product->is_best_seller = $data['is_best_seller'];
+        }
+        // $product->is_best_seller = $data['is_best_seller'];
         $product->image = $filename;
         $product->save();
         return redirect()->route('product.index')->with('success','Product Successfully Added');
@@ -69,13 +72,29 @@ class ProductController extends Controller
         //     'category'  => 'required|in:food,drink,snack',
         //     'image' => 'required|image|mimes:jpeg,png,jpg',
         // ]);
-        $filename = time().'.'.$request->image->extension();
-        $request->image->storeAs('public/products', $filename);
+
+        // $filename = time().'.'.$request->image->extension();
+        // $request->image->storeAs('public/products', $filename);
 
         $data = $request->all();
 
+
         $product->update($data);
-        $product->image = $filename;
+
+        if ($request->hasFile('image')) {
+            //delete existing image
+            if ($product->image) {
+                $image_path = public_path('storage/products/'.$product->image);
+                if (file_exists($image_path)) {
+                    unlink($image_path);
+                }
+            }
+
+            $filename = time().'.'.$request->image->extension();
+            $request->image->storeAs('public/products', $filename);
+            $product->image = $filename;
+        }
+        // $product->image = $filename;
         $product->save();
 
         return redirect()->route('product.index')->with('success','Product Successfully Updated');

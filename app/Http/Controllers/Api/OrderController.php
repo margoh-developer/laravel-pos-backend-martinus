@@ -19,7 +19,8 @@ class OrderController extends Controller
             'order_items.*.product_id' => 'required|exists:products,id',
             'order_items.*.quantity' => 'required|numeric',
             'order_items.*.total_price' => 'required|numeric',
-            // 'payment_method' => 'required|string|in:cash,qris',
+            'payment_method' => 'required|string|in:cash,qris',
+            'table_number' => 'required|integer',
         ]);
 
         $order = \App\Models\Order::create([
@@ -27,7 +28,9 @@ class OrderController extends Controller
             'total_price' => $request->total_price,
             'total_item' => $request->total_item,
             'kasir_id' => $request->kasir_id,
-            'payment_method' => $request->payment_method
+            'payment_method' => $request->payment_method,
+            'table_number' => $request->table_number,
+
         ]);
 
         foreach($request->order_items as $order_item){
@@ -36,7 +39,7 @@ class OrderController extends Controller
                 'product_id' => $order_item['product_id'],
                 'quantity' => $order_item['quantity'],
                 'total_price' => $order_item['total_price'],
-                // 'payment_method' => $request->payment_method,
+
             ]);
         }
 

@@ -37,6 +37,7 @@ class ProductController extends Controller
             'category' => 'required|in:food,drink,snack',
             'image' => 'required|image|mimes:png,jpg,jpeg',
             'is_best_seller' => 'required|boolean',
+
         ]);
 
         $filename = time() . '.' . $request->image->extension();
@@ -48,7 +49,9 @@ class ProductController extends Controller
             'category' => $request->category,
             'image' => $filename,
             // 'is_favorite' => $request->is_favorite,
-            'is_best_seller' => $request->is_best_seller
+            'is_best_seller' => $request->is_best_seller,
+       
+
         ]);
 
         if ($product) {
@@ -109,11 +112,24 @@ class ProductController extends Controller
         $product->is_best_seller = $request->is_best_seller;
         $product->save();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Product Updated',
-            'data' => $product
-        ], 200);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Product Updated',
+        //     'data' => $product
+        // ], 201);
+
+        if ($product) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Product Created',
+                'data' => $product
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Product Failed to Save',
+            ], 409);
+        }
 
     }
 

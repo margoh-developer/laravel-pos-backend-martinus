@@ -119,6 +119,22 @@
                                 </div>
 
                             </div>
+
+
+
+
+                            <div class="form-group">
+                                <div class="control-label">Best Seller</div>
+                                <label class="custom-switch mt-2">
+                                    <input type="checkbox"
+                                        name="is_best_seller"
+                                        class="custom-switch-input "
+                                        value="1" unchecked value="0" >
+                                    <span class="custom-switch-indicator"></span>
+                                    {{-- <span class="custom-switch-description"></span> --}}
+                                </label>
+                            </div>
+
                         </div>
                         <div class="card-footer text-right">
 

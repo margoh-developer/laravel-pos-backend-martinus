@@ -16,7 +16,8 @@ class Order extends Model
         'total_price',
         'total_item',
         'kasir_id',
-        'payment_method'
+        'payment_method',
+        'table_number',
 
     ];
 
